@@ -1,28 +1,59 @@
 import React, { useEffect, useState } from "react";
+import "./task.css";
 export default function Test({ searchResult }) {
   const [search, setSearch] = useState("");
   const [filterResult, setfilteredData] = useState([]);
-  let filteredData = [];
-  const TextHandler = (e) => {
+  const [isHideSuggs, setIsHideSuggs] = useState(false);
+
+  const handleTextChange = (e) => {
     setSearch(e.target.value);
+    setIsHideSuggs(false);
   };
 
-  const searchClick = () => {
-    filteredData = searchResult?.filter((value) => {
-      return value.text.toLowerCase().includes(search);
-    });
+  useEffect(()=>{
+    setfilteredData(searchResult)
+    setIsHideSuggs(true);
+  },[searchResult])
 
-    setfilteredData(filteredData);
-    console.log(filterResult);
+  const handleSearchClick = (e) => {
+    setfilteredData(
+      searchResult?.filter((value) =>
+        value.text.toLowerCase().includes(e.target.value)
+      )
+    );
   };
+
+  const selectHandleClick = (selectedValue) => {
+    setSearch(selectedValue);
+    setIsHideSuggs(true);
+  };
+
   return (
     <>
-      <input type="text" value={search} onChange={TextHandler} />
-      <input type="button" value="search" onClick={searchClick} />
-      {filterResult &&
-        filterResult.map((item, index) => {
-          return <h4 key={index}>{item.text}</h4>;
-        })}
+      {" "}<div className="container">
+      <div className="sugesstion-auto">
+        <div className="form-control-auto">
+          <label htmlFor="tag-input">Todo</label>
+          <input
+            type="text"
+            value={search}
+            onChange={handleTextChange}
+            onKeyUp={handleSearchClick}
+          />
+        </div>
+        {/* <input type="button" value="search" onClick={handleSearchClick} /> */}
+        <div
+          className="suggestions"
+          style={{ display: isHideSuggs ? "none" : "block" }}
+        >
+          {filterResult &&
+            filterResult.map((item, index) => (
+              <div key={index} onClick={() => selectHandleClick(item["text"])}>
+                {item["text"]}
+              </div>
+            ))}{" "}
+        </div>
+      </div></div>
     </>
   );
 }

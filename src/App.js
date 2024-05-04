@@ -1,6 +1,6 @@
 import "./styles.css";
 import { useState } from "react";
-import Test from "./Test";
+import Test from "./Test.tsx";
 export default function App() {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
