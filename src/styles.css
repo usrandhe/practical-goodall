@@ -1,0 +1,18 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+inpit [type="text"] {
+  padding: 8px;
+  margin-left: 8px;
+}
+
+button {
+  padding: 0px;
+  margin-left: 8px;
+}
+
+li {
+  margin-bottom: 8px;
+}
